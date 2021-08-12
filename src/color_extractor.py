@@ -41,6 +41,11 @@ class ColorExtractor:
         image = cv2.imread(image_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = image.reshape((image.shape[0] * image.shape[1], 3))
+        
+        pearsonr = []
+        comb = combinations([0, 1, 2], 2)
+        for i in list(comb):
+            pearsonr.extend([stats.pearsonr(image[:,i[0]], image[:,i[1]])[0]])
 
         clt = KMeans(n_clusters=k)
         clt.fit(image)
@@ -52,7 +57,7 @@ class ColorExtractor:
         plt.axis("off")
         plt.imshow(bar)
         plt.show()
-        return p_arr
+        return p_arr, pearsonr
 
     def get_color(self, file_name, k=3):
         image = mpimg.imread(file_name)
