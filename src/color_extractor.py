@@ -4,6 +4,9 @@
 
 import operator
 
+from itertools import combinations
+from scipy import stats
+
 import cv2
 import matplotlib.image as mpimg
 import numpy as np
